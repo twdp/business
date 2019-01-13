@@ -1,4 +1,4 @@
-package util
+package business
 
 import (
 	"github.com/go-sql-driver/mysql"

@@ -1,4 +1,4 @@
-package util
+package business
 
 /**
  * 判断是否发生了错误
