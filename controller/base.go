@@ -28,7 +28,7 @@ func (t *TemplateController) Return(body string) {
 func (r *TemplateController) ReadBody(result interface{}) {
 	b := r.Ctx.Input.RequestBody
 	err := json.Unmarshal(b, result)
-	if util.IsError(err) {
+	if business.IsError(err) {
 		logs.Error("read body failed. %v", err)
 	}
 }
@@ -46,7 +46,7 @@ func (r *RestfulController) ReturnJson(data interface{}) {
 func (r *RestfulController) ReadBody(result interface{}) {
 	b := r.Ctx.Input.RequestBody
 	err := json.Unmarshal(b, result)
-	if util.IsError(err) {
+	if business.IsError(err) {
 		logs.Error("read body failed. %v", err)
 	}
 }
