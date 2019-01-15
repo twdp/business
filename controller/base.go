@@ -14,7 +14,7 @@ type RestfulController struct {
 func (r *RestfulController) ReturnJson(data interface{}) {
 	r.Data["json"] = data
 	r.ServeJSON()
-	//r.StopRun()
+	r.StopRun()
 }
 
 func (r *RestfulController) ReadBody(result interface{}) {
@@ -33,6 +33,7 @@ func (r *RestfulController) Code(code int, body string) {
 	out := r.Ctx.Output
 	out.SetStatus(code)
 	out.Body([]byte(body))
+	r.StopRun()
 }
 
 func (r *RestfulController) Return(body interface{}) {
