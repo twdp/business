@@ -1,6 +1,7 @@
 package business
 
 import (
+	"github.com/astaxie/beego/orm"
 	"github.com/go-sql-driver/mysql"
 )
 
@@ -1093,6 +1094,16 @@ func IsDuplicationKeyError(err error) bool {
 			if driverErr.Number == ER_DUP_ENTRY {
 				return true
 			}
+		}
+	}
+	return false
+}
+
+// orm 查询不到记录
+func IsNoRowsError(err error) bool {
+	if IsError(err) {
+		if err == orm.ErrNoRows {
+			return true
 		}
 	}
 	return false
