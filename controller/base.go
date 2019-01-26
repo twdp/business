@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
+	"github.com/pkg/errors"
 	"tianwei.pro/business"
 )
 
@@ -17,11 +18,16 @@ func (r *RestfulController) ReturnJson(data interface{}) {
 	r.StopRun()
 }
 
-func (r *RestfulController) ReadBody(result interface{}) {
+var (
+	ReadBodyFailed = errors.New("读取请求信息失败")
+)
+
+func (r *RestfulController) ReadBody(result interface{}) error {
 	b := r.Ctx.Input.RequestBody
 	err := json.Unmarshal(b, result)
 	if business.IsError(err) {
 		logs.Error("read body failed. %v", err)
+		return ReadBodyFailed
 	}
 }
 
