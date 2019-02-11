@@ -29,6 +29,7 @@ func (r *RestfulController) ReadBody(result interface{}) error {
 		logs.Error("read body failed. %v", err)
 		return ReadBodyFailed
 	}
+	return nil
 }
 
 func (r *RestfulController) E500(body string) {
