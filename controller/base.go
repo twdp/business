@@ -32,14 +32,26 @@ func (r *RestfulController) ReadBody(result interface{}) error {
 	return nil
 }
 
-func (r *RestfulController) E500(body string) {
+func (r *RestfulController) E500(body interface{}) {
 	r.Code(500, body)
 }
 
-func (r *RestfulController) Code(code int, body string) {
+func (r *RestfulController) Code(code int, body interface{}) {
+	var b []byte
+	switch body.(type) {
+	case string:
+		b = []byte(body.(string))
+	default:
+		if bb, err := json.Marshal(body); err != nil {
+			logs.Warn("json marshal failed.  body: %v, err: %v", body, err)
+		} else {
+			b = bb
+		}
+
+	}
 	out := r.Ctx.Output
 	out.SetStatus(code)
-	out.Body([]byte(body))
+	out.Body(b)
 	r.StopRun()
 }
 
