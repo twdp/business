@@ -40,7 +40,13 @@ func (r *RestfulController) Code(code int, body interface{}) {
 	var b []byte
 	switch body.(type) {
 	case string:
-		b = []byte(body.(string))
+		result := make(map[string]interface{})
+		result["msg"] = body
+		if bb, err := json.Marshal(result); err != nil {
+			logs.Warn("json marshal failed.  body: %v, err: %v", body, err)
+		} else {
+			b = bb
+		}
 	default:
 		if bb, err := json.Marshal(body); err != nil {
 			logs.Warn("json marshal failed.  body: %v, err: %v", body, err)
