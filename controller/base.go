@@ -62,9 +62,5 @@ func (r *RestfulController) Code(code int, body interface{}) {
 }
 
 func (r *RestfulController) Return(body interface{}) {
-	b, err := json.Marshal(body)
-	if business.IsError(err) {
-		logs.Error("read body failed. %v", err)
-	}
-	r.Code(200, string(b))
+	r.Code(200, body)
 }
