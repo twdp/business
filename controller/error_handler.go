@@ -5,22 +5,22 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
 	"github.com/astaxie/beego/logs"
+	"net/http"
 	"runtime"
+	"strconv"
 )
 
 type RestfulErrorHandler struct {
 	RestfulController
 }
 
-
 func (c *RestfulErrorHandler) Error404() {
 	c.Code(404, "not found")
 }
 
 func (c *RestfulErrorHandler) Error501() {
-	c.Code(501, "server error")
+	c.Code(501, "系统错误,稍后重试")
 }
-
 
 func (c *RestfulErrorHandler) ErrorDb() {
 	c.Code(500, "db is now down")
@@ -45,6 +45,15 @@ var (
 func RestfulErrorHandle(ctx *context.Context) {
 	if err := recover(); err != nil {
 		if err == beego.ErrAbort {
+			return
+		}
+		if e, ok := err.(string); ok {
+			code, err := strconv.Atoi(e)
+			if err != nil {
+				panic(err)
+			}
+			ctx.ResponseWriter.WriteHeader(code)
+			ctx.ResponseWriter.Write([]byte(fmt.Sprintf("{\"msg\":\"%s\"}", http.StatusText(code))))
 			return
 		}
 		logs.Critical("the request url is ", ctx.Input.URL())
