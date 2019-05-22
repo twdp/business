@@ -7,13 +7,13 @@ import (
 )
 
 type Base struct {
-	Id        int64             `json:"id"`
-	CreatedAt orm.DateTimeField `json:"created_at" orm:"auto_now_add"`
-	UpdatedAt orm.DateTimeField `json:"updated_at" orm:"auto_now"`
 
 	Extra map[string]interface{} `orm:"-" json:"extra"`
 
 	ExtraJson string `orm:"type(text)" json:"-"`
+
+	CreatedAt orm.DateTimeField `json:"created_at" orm:"auto_now_add"`
+	UpdatedAt orm.DateTimeField `json:"updated_at" orm:"auto_now"`
 }
 
 
