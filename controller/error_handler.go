@@ -15,6 +15,7 @@ type RestfulErrorHandler struct {
 }
 
 func (c *RestfulErrorHandler) Error404() {
+	logs.Error("api not found. url: %s, method: %s", c.Ctx.Request.URL, c.Ctx.Request.Method)
 	c.Code(404, "not found")
 }
 
