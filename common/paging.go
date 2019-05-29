@@ -34,21 +34,21 @@ func (p *Paging) Num() *list.List {
 		pp.PushBack(&PagNum{Key: "...", Value: "javascript;"})
 	}
 	for i := p.PageNo - 3; i < p.PageNo && i > 0; i++ {
-		ii := util.CastInt64ToString(i)
+		ii := business.CastInt64ToString(i)
 		pp.PushBack(&PagNum{Key: ii, Value: ii})
 	}
-	ppp := util.CastInt64ToString(p.PageNo)
+	ppp := business.CastInt64ToString(p.PageNo)
 	pp.PushBack(&PagNum{Key: ppp, Value: ppp})
 
 	for i := p.PageNo + 1; i <= totalNo && i-p.PageNo <= 2; i++ {
-		ii := util.CastInt64ToString(i)
+		ii := business.CastInt64ToString(i)
 		pp.PushBack(&PagNum{Key: ii, Value: ii})
 	}
 	if totalNo-p.PageNo > 2 {
 		pp.PushBack(&PagNum{Key: "...", Value: "javascript;"})
 	}
 	if p.PageNo < totalNo && totalNo >= p.PageNo {
-		pp.PushBack(&PagNum{Key: "最后一页", Value: util.CastInt64ToString(totalNo)})
+		pp.PushBack(&PagNum{Key: "最后一页", Value: business.CastInt64ToString(totalNo)})
 	}
 	return pp
 }
