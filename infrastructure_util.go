@@ -10,3 +10,8 @@ func IsError(err error) bool {
 	return false
 }
 
+func Check(err error) {
+	if nil != err {
+		panic(err)
+	}
+}
